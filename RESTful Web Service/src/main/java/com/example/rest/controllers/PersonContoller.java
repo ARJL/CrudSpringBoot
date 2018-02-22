@@ -54,6 +54,12 @@ public class PersonContoller {
         return new ModelAndView("redirect:/persons/get/all") ;
     }
 
+    @GetMapping(value = "/create")
+    public ModelAndView create1(@RequestParam(value = "name") String name){
+        repository.save(new Person(name));
+        return new ModelAndView("redirect:/persons/get/all") ;
+    }
+
 
 
 
