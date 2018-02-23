@@ -26,11 +26,11 @@ public class PersonContoller {
     }
 
     @GetMapping(value = "/delete/{id}")
-    public ModelAndView delete(@PathVariable(value = "id") int id){
+    public String delete(@PathVariable(value = "id") int id){
         repository.delete(id);
-        return new ModelAndView("redirect:/persons/get/all") ;
+        return "redirect:/persons/get/all" ;
     }
-
+    //*****************
     @GetMapping(value = "/edit/{id}")
     public String edit(@PathVariable(value = "id") int id , Model model){
         Person person = repository.findOne(id);
@@ -38,30 +38,26 @@ public class PersonContoller {
         return  "edit" ;
     }
 
-    @PostMapping(value = "/update")
-    public ModelAndView update(){
-        return  new ModelAndView("redirect:/persons/get/all");
+    @PostMapping(value = "/update")    //here
+    public String update(@RequestParam("id") int id , @RequestParam("name") String name){
+        Person person = repository.findOne(id);
+        person.setName(name);
+        repository.save(person);
+        return "redirect:/persons/get/all";
     }
+
+
+    //*****************
 
     @GetMapping(value = "/new")
     public String add(){
         return "new" ;
     }
 
-    @PostMapping(value = "/create")
-    public ModelAndView create(@RequestParam(value = "name") String name){
+    @PostMapping(value = "/create")     //here
+    public String create(@RequestParam(value = "name") String name){
         repository.save(new Person(name));
-        return new ModelAndView("redirect:/persons/get/all") ;
+        return "redirect:/persons/get/all" ;
     }
-
-    @GetMapping(value = "/create")
-    public ModelAndView create1(@RequestParam(value = "name") String name){
-        repository.save(new Person(name));
-        return new ModelAndView("redirect:/persons/get/all") ;
-    }
-
-
-
-
 
 }
