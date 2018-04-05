@@ -2,6 +2,7 @@ package com.example.rest.controllers;
 
 import com.example.rest.data.Person;
 import com.example.rest.data.PersonRepository;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,12 @@ public class PersonContoller {
 
     @Autowired
     private PersonRepository repository;
+
+    @GetMapping
+    public String all(Model model){
+        model.addAttribute("persons",repository.findAll());
+        return "list";
+    }
 
     @GetMapping("/get/all")
     public String getAllPersons(Model model){
