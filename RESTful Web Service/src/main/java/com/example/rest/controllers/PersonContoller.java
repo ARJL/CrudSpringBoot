@@ -18,7 +18,7 @@ public class PersonContoller {
     @Autowired
     private PersonRepository repository;
 
-    @GetMapping
+    @GetMapping("/get/all")
     public String getAllPersons(Model model){
         model.addAttribute("persons",repository.findAll());
         //System.out.print(model.toString());
